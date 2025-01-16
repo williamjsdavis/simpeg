@@ -1,5 +1,6 @@
 import types
 import numpy as np
+import cupy as cp
 from functools import wraps
 import warnings
 
@@ -1039,7 +1040,7 @@ def validate_ndarray_with_shape(property_name, var, shape=None, dtype=float):
         dtypes = dtype
     for dtype in dtypes:
         try:
-            if isinstance(var, np.ndarray):
+            if isinstance(var, np.ndarray) | isinstance(var, cp.ndarray):
                 var = var.astype(dtype, casting="safe", copy=False)
             else:
                 var = np.asarray(var, dtype=dtype)

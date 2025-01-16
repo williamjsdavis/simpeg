@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.sparse as sp
+import cupyx
 from discretize.utils import Zero
 
 from ... import props
@@ -195,8 +196,9 @@ class BaseFDEMSimulation(BaseEMSimulation):
         for i_f, freq in enumerate(self.survey.frequencies):
             A = self.getA(freq)
             rhs = self.getRHS(freq)
+            A = cupyx.scipy.sparse._csr.csr_matrix(A)
             Ainv = self.solver(A, **self.solver_opts)
-            u = Ainv * rhs
+            u = Ainv * rhs # Unfortunately rhs cannot be a cupy array
             if not self.forward_only:
                 self.Ainv[i_f] = Ainv
 

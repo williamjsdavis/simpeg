@@ -416,9 +416,9 @@ class HasModel(BaseSimPEG, metaclass=PhysicalPropertyMetaclass):
                 )
 
             # coerce to a numpy array
-            value = validate_ndarray_with_shape(
-                "model", value, shape=("*",), dtype=float
-            )
+            # value = validate_ndarray_with_shape(
+            #     "model", value, shape=("*",), dtype=float
+            # )
 
             # Check the model is a good shape
             errors = []
